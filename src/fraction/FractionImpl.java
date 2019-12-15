@@ -12,8 +12,12 @@ public class FractionImpl implements Fraction {
      * @param numerator
      * @param denominator
      */
+    private int numerator;
+    private int denominator;
+
     public FractionImpl(int numerator, int denominator) {
-        // TODO
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     /**
