@@ -2,8 +2,7 @@ import fraction.FractionImpl;
 
 public class Main {
     public static void main(String[] args){
-        System.out.println("hello world ");
-        FractionImpl n = new FractionImpl(3, 9);
+        FractionImpl n = new FractionImpl(123124123, 9231234);
         System.out.println(n.toString());
     }
 }

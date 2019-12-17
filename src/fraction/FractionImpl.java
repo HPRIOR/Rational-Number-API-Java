@@ -18,10 +18,29 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else {
-            //handle minuses here
-            this.denominator = denominator;
-            this.numerator  = numerator;
-            normalise();
+            if (denominator < 0 & numerator < 0){
+                this.denominator = makeMinusPlus(denominator);
+                this.numerator = makeMinusPlus(numerator);
+                normalise();
+                this.numerator = makeMinusPlus(this.numerator);
+            }
+            else if (numerator < 0 & denominator > 0){
+                this.numerator = makeMinusPlus(numerator);
+                this.denominator = denominator;
+                normalise();
+                this.numerator = makeMinusPlus(this.numerator);
+            }
+            else if (denominator < 0 & numerator > 0){
+                this.denominator = makeMinusPlus(denominator);
+                this.numerator = numerator;
+                normalise();
+                this.numerator = makeMinusPlus(this.numerator);
+            }
+            else{
+                this.numerator = numerator;
+                this.denominator = denominator;
+                normalise();
+            }
         }
     }
 
@@ -96,8 +115,8 @@ public class FractionImpl implements Fraction {
      * Helper method: integer minus to positive, or positive to minus
      */
     private int makeMinusPlus(int n){
-        if (n < 0) return n + n*2;
-        else if (n > 0) return n - n*2;
+        if (n < 0) return n*-1;
+        else if (n > 0) return -n;
         else return 0;
     }
 
