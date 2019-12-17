@@ -1,5 +1,7 @@
 package fraction;
 
+import javafx.util.Pair;
+
 public class FractionImpl implements Fraction {
     /**
      * Parameters are the numerator and the denominator.
@@ -18,6 +20,7 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else {
+            //check for minus values in either the denominator or numerator
             if (denominator < 0 & numerator < 0){
                 this.denominator = makeMinusPlus(denominator);
                 this.numerator = makeMinusPlus(numerator);
@@ -37,9 +40,11 @@ public class FractionImpl implements Fraction {
                 this.numerator = makeMinusPlus(this.numerator);
             }
             else{
-                this.numerator = numerator;
-                this.denominator = denominator;
-                normalise();
+                int den = normalise2(numerator, denominator)[0];
+                int num = normalise2(numerator, denominator)[1];
+                this.numerator = num;
+                this.denominator = den;
+
             }
         }
     }
@@ -50,8 +55,11 @@ public class FractionImpl implements Fraction {
      * @param wholeNumber representing the numerator
      */
     public FractionImpl(int wholeNumber) {
-        // TODO
+        this.numerator = wholeNumber;
+        this.denominator = 1;
     }
+
+
 
     /**
      * The parameter is a String containing either a whole number, such as `5` or `-3`, or a fraction,
@@ -68,6 +76,14 @@ public class FractionImpl implements Fraction {
         // TODO
         // this should make this.d+n the int representation of the string, then
         // this should be normalised with the void function below
+    }
+
+    private int getNumerator(){
+        return numerator;
+    }
+
+    private int getDenominator(){
+        return denominator;
     }
 
     /**
@@ -110,6 +126,23 @@ public class FractionImpl implements Fraction {
             this.denominator = 1;
         }
     }
+
+    private int[] normalise2(int arg1, int arg2){
+        int[] rtrn = new int[2];
+        int answer = arg1/arg2;
+        int prev_answer = arg1/arg2;
+        int remainder = arg1 % arg2;
+        int prev_remainder = arg2;
+        while (remainder != 0){
+            answer = answer/remainder;
+            prev_remainder = remainder;
+            remainder = prev_answer%remainder;
+            prev_answer=answer;
+        }
+        rtrn[0] = arg2/prev_remainder;
+        rtrn[1] = arg1/prev_remainder;
+        return rtrn;
+        }
 
     /**
      * Helper method: integer minus to positive, or positive to minus
