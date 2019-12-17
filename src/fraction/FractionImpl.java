@@ -16,8 +16,13 @@ public class FractionImpl implements Fraction {
     private int denominator;
 
     public FractionImpl(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
+        else {
+            //handle minuses here
+            this.denominator = denominator;
+            this.numerator  = numerator;
+            gcd();
+        }
     }
 
     /**
@@ -42,6 +47,23 @@ public class FractionImpl implements Fraction {
      */
     public FractionImpl(String fraction) {
         // TODO
+    }
+
+    /**
+     * Helper method which returns a normalised fraction
+     */
+    private void gcd(){
+        if (this.numerator > this.denominator){
+
+        }
+        else if (this.denominator > this. numerator){
+
+        }
+        // if numerator = denominator
+        else{
+            this.numerator = 1;
+            this.denominator = 1;
+        }
     }
 
     /**
@@ -137,6 +159,9 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public String toString() {
-        return null;
+        // Handle improper fractions
+        String den_str = String.valueOf(denominator);
+        String num_str = String.valueOf(numerator);
+        return num_str + '/' + den_str;
     }
 }
