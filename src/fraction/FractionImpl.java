@@ -48,7 +48,7 @@ public class FractionImpl implements Fraction {
     public FractionImpl(String fraction) {
         // TODO
         // this should make this.d+n the int representation of the string, then
-        //this should be normalised with the void function below
+        // this should be normalised with the void function below
     }
 
     /**
@@ -56,10 +56,33 @@ public class FractionImpl implements Fraction {
      * handles minus value too
      */
     private void normalise(){
-        if (this.numerator > this.denominator){
-
+        if (numerator > denominator){
+            int answer = numerator/denominator;
+            int prev_answer = numerator/denominator;
+            int remainder = numerator % denominator;
+            int prev_remainder = denominator;
+            while (remainder != 0){
+                answer = answer/remainder;
+                prev_remainder = remainder;
+                remainder = prev_answer%remainder;
+                prev_answer=answer;
+            }
+            denominator = denominator/prev_remainder;
+            numerator = numerator/prev_remainder;
         }
-        else if (this.denominator > this. numerator){
+        else if (denominator > numerator){
+            int answer = denominator/numerator;
+            int prev_answer = denominator/numerator;
+            int remainder = denominator % numerator;
+            int prev_remainder = numerator;
+            while (remainder != 0){
+                answer = answer/remainder;
+                prev_remainder = remainder;
+                remainder = prev_answer%remainder;
+                prev_answer=answer;
+            }
+            denominator = denominator/prev_remainder;
+            numerator = numerator/prev_remainder;
 
         }
         // if numerator = denominator
@@ -70,7 +93,7 @@ public class FractionImpl implements Fraction {
     }
 
     /**
-     * Helper method to make an integer minus or positive
+     * Helper method: integer minus to positive, or positive to minus
      */
     private int makeMinusPlus(int n){
         if (n < 0) return n + n*2;
