@@ -21,7 +21,7 @@ public class FractionImpl implements Fraction {
             //handle minuses here
             this.denominator = denominator;
             this.numerator  = numerator;
-            gcd();
+            normalise();
         }
     }
 
@@ -47,12 +47,15 @@ public class FractionImpl implements Fraction {
      */
     public FractionImpl(String fraction) {
         // TODO
+        // this should make this.d+n the int representation of the string, then
+        //this should be normalised with the void function below
     }
 
     /**
      * Helper method which returns a normalised fraction in constructor
+     * handles minus value too
      */
-    private void gcd(){
+    private void normalise(){
         if (this.numerator > this.denominator){
 
         }
