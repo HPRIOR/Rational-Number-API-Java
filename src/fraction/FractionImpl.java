@@ -50,7 +50,7 @@ public class FractionImpl implements Fraction {
     }
 
     /**
-     * Helper method which returns a normalised fraction
+     * Helper method which returns a normalised fraction in constructor
      */
     private void gcd(){
         if (this.numerator > this.denominator){
@@ -64,6 +64,15 @@ public class FractionImpl implements Fraction {
             this.numerator = 1;
             this.denominator = 1;
         }
+    }
+
+    /**
+     * Helper method to make an integer minus or positive
+     */
+    private int makeMinusPlus(int n){
+        if (n < 0) return n + n*2;
+        else if (n > 0) return n - n*2;
+        else return 0;
     }
 
     /**
