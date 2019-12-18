@@ -56,7 +56,14 @@ public class FractionImpl implements Fraction {
         // otherwise logically some of the statements will always be false
             // (doesn't know i'm removing minus vales
         else if (numerator > 0 & denominator > 0){
-
+            if (numerator > denominator){
+                this.numerator = normalise(numerator, denominator)[0];
+                this.denominator = normalise(numerator, denominator)[1];
+            }
+            else{
+                this.numerator = normalise(denominator, numerator)[1];
+                this.denominator = normalise(denominator, numerator)[0];
+            }
         }
         else if (numerator < 0 & denominator > 0){
 
@@ -108,21 +115,21 @@ public class FractionImpl implements Fraction {
      * Helper method which returns a normalised fraction in constructor
      * handles minus value too
      */
-    private int[] normalise(int arg1, int arg2) {
+    private int[] normalise(int large, int small) {
 
         int[] rtrn = new int[2];
-        int answer = arg1 / arg2;
-        int prev_answer = arg1 / arg2;
-        int remainder = arg1 % arg2;
-        int GCD = arg2;
+        int answer = large / small;
+        int prev_answer = large / small;
+        int remainder = large % small;
+        int GCD = small;
         while (remainder != 0) {
             answer = answer / remainder;
             GCD = remainder;
             remainder = prev_answer % remainder;
             prev_answer = answer;
         }
-        rtrn[0] = arg1 / GCD;
-        rtrn[1] = arg2 / GCD;
+        rtrn[0] = large / GCD;
+        rtrn[1] = small / GCD;
 
         return rtrn;
     }
