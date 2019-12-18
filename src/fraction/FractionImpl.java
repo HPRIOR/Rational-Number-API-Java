@@ -1,6 +1,5 @@
 package fraction;
 
-import javafx.util.Pair;
 
 public class FractionImpl implements Fraction {
     /**
@@ -17,36 +16,48 @@ public class FractionImpl implements Fraction {
     private int numerator;
     private int denominator;
 
+    //public FractionImpl(int numerator, int denominator) {
+    //    if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
+    //    else {
+    //        //check for minus values in either the denominator or numerator and which is greater than which
+    //        if (denominator < 0 & numerator < 0){
+    //            this.denominator = makePlus(denominator);
+    //            this.numerator = makePlus(numerator);
+    //            normalise();
+    //            this.numerator = makePlus(this.numerator);
+    //        }
+    //        else if (numerator < 0 & denominator > 0){
+    //            this.numerator = makePlus(numerator);
+    //            this.denominator = denominator;
+    //            normalise();
+    //            this.numerator = makePlus(this.numerator);
+    //        }
+    //        else if (denominator < 0 & numerator > 0){
+    //            this.denominator = makePlus(denominator);
+    //            this.numerator = numerator;
+    //            normalise();
+    //            this.numerator = makePlus(this.numerator);
+    //        }
+    //        else{
+    //            //which is greater than which here
+    //            int den = normalise2(numerator, denominator)[0];
+    //            int num = normalise2(numerator, denominator)[1];
+    //            this.numerator = num;
+    //            this.denominator = den;
+//
+    //        }
+    //    }
+    //}
+//
+
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
-        else {
-            //check for minus values in either the denominator or numerator and which is greater than which
-            if (denominator < 0 & numerator < 0){
-                this.denominator = makeMinusPlus(denominator);
-                this.numerator = makeMinusPlus(numerator);
-                normalise();
-                this.numerator = makeMinusPlus(this.numerator);
-            }
-            else if (numerator < 0 & denominator > 0){
-                this.numerator = makeMinusPlus(numerator);
-                this.denominator = denominator;
-                normalise();
-                this.numerator = makeMinusPlus(this.numerator);
-            }
-            else if (denominator < 0 & numerator > 0){
-                this.denominator = makeMinusPlus(denominator);
-                this.numerator = numerator;
-                normalise();
-                this.numerator = makeMinusPlus(this.numerator);
-            }
-            else{
-                //which is greater than which here
-                int den = normalise2(numerator, denominator)[0];
-                int num = normalise2(numerator, denominator)[1];
-                this.numerator = num;
-                this.denominator = den;
+        else if (numerator > denominator){
 
-            }
+        }
+        // if denominator > numerator
+        else{
+
         }
     }
 
@@ -80,87 +91,44 @@ public class FractionImpl implements Fraction {
         // call other constructor by using the 'this' keyword
     }
 
-    private int getNumerator(){
-        return numerator;
-    }
+    private int getNumerator(){return numerator;}
 
-    private int getDenominator(){
-        return denominator;
-    }
+    private int getDenominator(){return denominator;}
 
     /**
      * Helper method which returns a normalised fraction in constructor
      * handles minus value too
      */
-    private void normalise(){
-        if (numerator > denominator){
-            int answer = numerator/denominator;
-            int prev_answer = numerator/denominator;
-            int remainder = numerator % denominator;
-            int prev_remainder = denominator;
-            while (remainder != 0){
-                answer = answer/remainder;
-                prev_remainder = remainder;
-                remainder = prev_answer%remainder;
-                prev_answer=answer;
-            }
-            denominator = denominator/prev_remainder;
-            numerator = numerator/prev_remainder;
-        }
-        else if (denominator > numerator){
-            int answer = denominator/numerator;
-            int prev_answer = denominator/numerator;
-            int remainder = denominator % numerator;
-            int prev_remainder = numerator;
-            while (remainder != 0){
-                answer = answer/remainder;
-                prev_remainder = remainder;
-                remainder = prev_answer%remainder;
-                prev_answer=answer;
-            }
-            denominator = denominator/prev_remainder;
-            numerator = numerator/prev_remainder;
+    private int[] normalise2(int arg1, int arg2) {
 
-        }
-        // if numerator = denominator
-        else{
-            this.numerator = 1;
-            this.denominator = 1;
-        }
-    }
-
-    private int[] normalise2(int arg1, int arg2){
-        // try to handle the greater than less than bit here
         int[] rtrn = new int[2];
-        int answer = arg1/arg2;
-        int prev_answer = arg1/arg2;
+        int answer = arg1 / arg2;
+        int prev_answer = arg1 / arg2;
         int remainder = arg1 % arg2;
         int prev_remainder = arg2;
-        while (remainder != 0){
-            answer = answer/remainder;
+        while (remainder != 0) {
+            answer = answer / remainder;
             prev_remainder = remainder;
-            remainder = prev_answer%remainder;
-            prev_answer=answer;
+            remainder = prev_answer % remainder;
+            prev_answer = answer;
         }
-        if (arg1 > arg2){
-            rtrn[0] = arg2/prev_remainder;
-            rtrn[1] = arg1/prev_remainder;
-        }
-        if (arg2 > arg1) {
-            rtrn[1] = arg2/prev_remainder;
-            rtrn[0] = arg1/prev_remainder;
-        }
+
+        rtrn[0] = arg2 / prev_remainder;
+        rtrn[1] = arg1 / prev_remainder;
         return rtrn;
-        }
+    }
+
 
     /**
      * Helper method: integer minus to positive, or positive to minus
      */
     // make two different plus and minus ones
-    private int makeMinusPlus(int n){
-        if (n < 0) return n*-1;
-        else if (n > 0) return -n;
-        else return 0;
+    private int makePlus(int n){
+        return n*-1;
+    }
+
+    private int makeMinus(int n){
+        return -n;
     }
 
     /**
