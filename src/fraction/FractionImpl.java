@@ -20,7 +20,7 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else {
-            //check for minus values in either the denominator or numerator
+            //check for minus values in either the denominator or numerator and which is greater than which
             if (denominator < 0 & numerator < 0){
                 this.denominator = makeMinusPlus(denominator);
                 this.numerator = makeMinusPlus(numerator);
@@ -40,6 +40,7 @@ public class FractionImpl implements Fraction {
                 this.numerator = makeMinusPlus(this.numerator);
             }
             else{
+                //which is greater than which here
                 int den = normalise2(numerator, denominator)[0];
                 int num = normalise2(numerator, denominator)[1];
                 this.numerator = num;
@@ -76,6 +77,7 @@ public class FractionImpl implements Fraction {
         // TODO
         // this should make this.d+n the int representation of the string, then
         // this should be normalised with the void function below
+        // call other constructor by using the 'this' keyword
     }
 
     private int getNumerator(){
@@ -128,6 +130,7 @@ public class FractionImpl implements Fraction {
     }
 
     private int[] normalise2(int arg1, int arg2){
+        // try to handle the greater than less than bit here
         int[] rtrn = new int[2];
         int answer = arg1/arg2;
         int prev_answer = arg1/arg2;
@@ -139,14 +142,21 @@ public class FractionImpl implements Fraction {
             remainder = prev_answer%remainder;
             prev_answer=answer;
         }
-        rtrn[0] = arg2/prev_remainder;
-        rtrn[1] = arg1/prev_remainder;
+        if (arg1 > arg2){
+            rtrn[0] = arg2/prev_remainder;
+            rtrn[1] = arg1/prev_remainder;
+        }
+        if (arg2 > arg1) {
+            rtrn[1] = arg2/prev_remainder;
+            rtrn[0] = arg1/prev_remainder;
+        }
         return rtrn;
         }
 
     /**
      * Helper method: integer minus to positive, or positive to minus
      */
+    // make two different plus and minus ones
     private int makeMinusPlus(int n){
         if (n < 0) return n*-1;
         else if (n > 0) return -n;
