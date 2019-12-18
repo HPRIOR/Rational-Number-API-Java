@@ -16,45 +16,9 @@ public class FractionImpl implements Fraction {
     private int numerator;
     private int denominator;
 
-    //public FractionImpl(int numerator, int denominator) {
-    //    if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
-    //    else {
-    //        //check for minus values in either the denominator or numerator and which is greater than which
-    //        if (denominator < 0 & numerator < 0){
-    //            this.denominator = makePlus(denominator);
-    //            this.numerator = makePlus(numerator);
-    //            normalise();
-    //            this.numerator = makePlus(this.numerator);
-    //        }
-    //        else if (numerator < 0 & denominator > 0){
-    //            this.numerator = makePlus(numerator);
-    //            this.denominator = denominator;
-    //            normalise();
-    //            this.numerator = makePlus(this.numerator);
-    //        }
-    //        else if (denominator < 0 & numerator > 0){
-    //            this.denominator = makePlus(denominator);
-    //            this.numerator = numerator;
-    //            normalise();
-    //            this.numerator = makePlus(this.numerator);
-    //        }
-    //        else{
-    //            //which is greater than which here
-    //            int den = normalise2(numerator, denominator)[0];
-    //            int num = normalise2(numerator, denominator)[1];
-    //            this.numerator = num;
-    //            this.denominator = den;
-//
-    //        }
-    //    }
-    //}
-//
 
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
-        // need to check for which is larger within the check for minus and plus!!!
-        // otherwise logically some of the statements will always be false
-            // (doesn't know i'm removing minus vales
         else if (numerator > 0 & denominator > 0){
             if (numerator > denominator){
                 this.numerator = normalise(numerator, denominator)[0];
@@ -98,9 +62,7 @@ public class FractionImpl implements Fraction {
                 this.numerator = makeMinus(normalise(denominator, numerator)[1]);
                 this.denominator = normalise(denominator, numerator)[0];
             }
-
         }
-
     }
 
     /**
@@ -112,7 +74,6 @@ public class FractionImpl implements Fraction {
         this.numerator = wholeNumber;
         this.denominator = 1;
     }
-
 
 
     /**
@@ -127,10 +88,10 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        // TODO
-        // this should make this.d+n the int representation of the string, then
-        // this should be normalised with the void function below
-        // call other constructor by using the 'this' keyword
+        String[] fractionSplit = fraction.split("/", 2);
+
+        System.out.println(Integer.parseInt(fractionSplit[0]) + "/" + Integer.parseInt(fractionSplit[1]));
+
     }
 
     private int getNumerator(){return numerator;}
@@ -142,7 +103,6 @@ public class FractionImpl implements Fraction {
      * handles minus value too
      */
     private int[] normalise(int large, int small) {
-
         int[] rtrn = new int[2];
         int answer = large / small;
         int prev_answer = large / small;
@@ -156,19 +116,21 @@ public class FractionImpl implements Fraction {
         }
         rtrn[0] = large / GCD;
         rtrn[1] = small / GCD;
-
         return rtrn;
     }
 
 
     /**
-     * Helper method: integer minus to positive, or positive to minus
+     * Helper method: makes integer plus
      */
-    // make two different plus and minus ones
     private int makePlus(int n){
         return n*-1;
     }
 
+    /**
+     * Helper method makes integer minus
+     *
+     */
     private int makeMinus(int n){
         return -n;
     }
