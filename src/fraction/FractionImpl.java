@@ -52,12 +52,33 @@ public class FractionImpl implements Fraction {
 
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
+        // need to check for which is larger within the check for minus and plus!!!
+        // otherwise logically some of the statements will always be false
+            // (doesn't know i'm removing minus vales
         else if (numerator > denominator){
+            if (numerator > 0 & denominator > 0){
+                this.numerator = normalise(numerator, denominator)[0];
+                this.denominator = normalise(numerator, denominator)[1];
 
+            }
+            else if (numerator > 0 & denominator < 0){
+
+            }
+            else if (numerator < 0 & denominator > 0){
+
+            }
+            else{
+
+            }
         }
         // if denominator > numerator
         else{
+            if (numerator > 0 & denominator > 0){
 
+            }
+            else{
+
+            }
         }
     }
 
@@ -99,22 +120,22 @@ public class FractionImpl implements Fraction {
      * Helper method which returns a normalised fraction in constructor
      * handles minus value too
      */
-    private int[] normalise2(int arg1, int arg2) {
+    private int[] normalise(int arg1, int arg2) {
 
         int[] rtrn = new int[2];
         int answer = arg1 / arg2;
         int prev_answer = arg1 / arg2;
         int remainder = arg1 % arg2;
-        int prev_remainder = arg2;
+        int GCD = arg2;
         while (remainder != 0) {
             answer = answer / remainder;
-            prev_remainder = remainder;
+            GCD = remainder;
             remainder = prev_answer % remainder;
             prev_answer = answer;
         }
+        rtrn[0] = arg1 / GCD;
+        rtrn[1] = arg2 / GCD;
 
-        rtrn[0] = arg2 / prev_remainder;
-        rtrn[1] = arg1 / prev_remainder;
         return rtrn;
     }
 
