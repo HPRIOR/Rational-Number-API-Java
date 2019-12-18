@@ -66,9 +66,11 @@ public class FractionImpl implements Fraction {
             }
         }
         else if (numerator < 0 & denominator > 0){
+            numerator = makePlus(numerator);
 
         }
         else if (numerator > 0 & denominator < 0){
+            denominator = makePlus(denominator);
 
         }
         else{
