@@ -55,31 +55,19 @@ public class FractionImpl implements Fraction {
         // need to check for which is larger within the check for minus and plus!!!
         // otherwise logically some of the statements will always be false
             // (doesn't know i'm removing minus vales
-        else if (numerator > denominator){
-            if (numerator > 0 & denominator > 0){
-                this.numerator = normalise(numerator, denominator)[0];
-                this.denominator = normalise(numerator, denominator)[1];
+        else if (numerator > 0 & denominator > 0){
 
-            }
-            else if (numerator > 0 & denominator < 0){
-
-            }
-            else if (numerator < 0 & denominator > 0){
-
-            }
-            else{
-
-            }
         }
-        // if denominator > numerator
+        else if (numerator < 0 & denominator > 0){
+
+        }
+        else if (numerator > 0 & denominator < 0){
+
+        }
         else{
-            if (numerator > 0 & denominator > 0){
 
-            }
-            else{
-
-            }
         }
+
     }
 
     /**
