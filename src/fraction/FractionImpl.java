@@ -67,13 +67,37 @@ public class FractionImpl implements Fraction {
         }
         else if (numerator < 0 & denominator > 0){
             numerator = makePlus(numerator);
-
+            if (numerator > denominator){
+                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
+                this.denominator = normalise(numerator, denominator)[1];
+            }
+            else{
+                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
+                this.denominator = normalise(denominator, numerator)[0];
+            }
         }
         else if (numerator > 0 & denominator < 0){
             denominator = makePlus(denominator);
-
+            if (numerator > denominator){
+                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
+                this.denominator = normalise(numerator, denominator)[1];
+            }
+            else{
+                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
+                this.denominator = normalise(denominator, numerator)[0];
+            }
         }
         else{
+            numerator = makePlus(numerator);
+            denominator = makePlus(denominator);
+            if (numerator > denominator){
+                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
+                this.denominator = normalise(numerator, denominator)[1];
+            }
+            else{
+                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
+                this.denominator = normalise(denominator, numerator)[0];
+            }
 
         }
 
