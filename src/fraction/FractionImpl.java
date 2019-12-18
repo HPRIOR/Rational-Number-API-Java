@@ -88,9 +88,19 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        String[] fractionSplit = fraction.split("/", 2);
 
-        System.out.println(Integer.parseInt(fractionSplit[0]) + "/" + Integer.parseInt(fractionSplit[1]));
+
+        //if (fractionSplit.length < 1){
+        //    this(Integer.parseInt(fractionSplit[0]));
+
+        //System.out.println(Integer.parseInt(fractionSplit[0]) + "/" + Integer.parseInt(fractionSplit[1]));
+    }
+
+    // in order to help the this clause in the string constructor, I may need to create a new helper class, with it's
+    // own constructor, which creates an object based on the type of string inputed - but then does the same probelm arise?
+    // the need to get two arguments or just one
+    private static int[] constructorHelp (String fraction){
+        return null;
 
     }
 
