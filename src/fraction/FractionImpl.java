@@ -20,48 +20,23 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else if (numerator > 0 & denominator > 0){
-            if (numerator > denominator){
-                this.numerator = normalise(numerator, denominator)[0];
-                this.denominator = normalise(numerator, denominator)[1];
-            }
-            else{
-                this.numerator = normalise(denominator, numerator)[1];
-                this.denominator = normalise(denominator, numerator)[0];
-            }
+            normalise(numerator, denominator);
         }
         else if (numerator < 0 & denominator > 0){
             numerator = makePlus(numerator);
-            if (numerator > denominator){
-                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
-                this.denominator = normalise(numerator, denominator)[1];
-            }
-            else{
-                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
-                this.denominator = normalise(denominator, numerator)[0];
-            }
+            normalise(numerator, denominator);
+            this.numerator = makeMinus(this.numerator);
         }
         else if (numerator > 0 & denominator < 0){
             denominator = makePlus(denominator);
-            if (numerator > denominator){
-                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
-                this.denominator = normalise(numerator, denominator)[1];
-            }
-            else{
-                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
-                this.denominator = normalise(denominator, numerator)[0];
-            }
+            normalise(numerator, denominator);
+            this.numerator = makeMinus(this.numerator);
         }
         else{
             numerator = makePlus(numerator);
             denominator = makePlus(denominator);
-            if (numerator > denominator){
-                this.numerator = makeMinus(normalise(numerator, denominator)[0]);
-                this.denominator = normalise(numerator, denominator)[1];
-            }
-            else{
-                this.numerator = makeMinus(normalise(denominator, numerator)[1]);
-                this.denominator = normalise(denominator, numerator)[0];
-            }
+            normalise(numerator, denominator);
+            this.numerator = makeMinus(this.numerator);
         }
     }
 
@@ -96,13 +71,6 @@ public class FractionImpl implements Fraction {
         //System.out.println(Integer.parseInt(fractionSplit[0]) + "/" + Integer.parseInt(fractionSplit[1]));
     }
 
-    // in order to help the this clause in the string constructor, I may need to create a new helper class, with it's
-    // own constructor, which creates an object based on the type of string inputed - but then does the same probelm arise?
-    // the need to get two arguments or just one
-    private static int[] constructorHelp (String fraction){
-        return null;
-
-    }
 
     private int getNumerator(){return numerator;}
 
@@ -110,23 +78,37 @@ public class FractionImpl implements Fraction {
 
     /**
      * Helper method which returns a normalised fraction in constructor
-     * handles minus value too
+     * handles the difference between numerator or denominator
      */
-    private int[] normalise(int large, int small) {
-        int[] rtrn = new int[2];
-        int answer = large / small;
-        int prev_answer = large / small;
-        int remainder = large % small;
-        int GCD = small;
-        while (remainder != 0) {
-            answer = answer / remainder;
-            GCD = remainder;
-            remainder = prev_answer % remainder;
-            prev_answer = answer;
+    private void normalise(int numerator, int denominator) {
+        if (numerator > denominator) {
+            int answer = numerator / denominator;
+            int prev_answer = numerator / denominator;
+            int remainder = numerator % denominator;
+            int GCD = denominator;
+            while (remainder != 0) {
+                answer = answer / remainder;
+                GCD = remainder;
+                remainder = prev_answer % remainder;
+                prev_answer = answer;
+            }
+            this.numerator = numerator / GCD;
+            this.denominator = denominator / GCD;
         }
-        rtrn[0] = large / GCD;
-        rtrn[1] = small / GCD;
-        return rtrn;
+        else {
+            int answer = denominator / numerator;
+            int prev_answer = denominator / numerator;
+            int remainder = denominator % numerator;
+            int GCD = numerator;
+            while (remainder != 0) {
+                answer = answer / remainder;
+                GCD = remainder;
+                remainder = prev_answer % remainder;
+                prev_answer = answer;
+            }
+            this.numerator = numerator / GCD;
+            this.denominator = denominator / GCD;
+        }
     }
 
 
