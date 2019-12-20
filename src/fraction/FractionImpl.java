@@ -144,11 +144,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction add(Fraction f) {
-        FractionImpl fImple = new FractionImpl(f.toString());
+        FractionImpl fImple = (FractionImpl) f;
         int newNumerator = (this.numerator * fImple.denominator) + (this.denominator * fImple.numerator);
         int newDenominator = (this.denominator*fImple.denominator);
-        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
-        return retFraction;
+        return new FractionImpl(newNumerator, newDenominator);
 
     }
 
@@ -157,11 +156,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction subtract(Fraction f) {
-        FractionImpl fImple = new FractionImpl(f.toString());
+        FractionImpl fImple = (FractionImpl) f;
         int newNumerator = (this.numerator * fImple.denominator) - (this.denominator * fImple.numerator);
         int newDenominator = (this.denominator*fImple.denominator);
-        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
-        return retFraction;
+        return new FractionImpl(newNumerator, newDenominator);
     }
 
     /**
@@ -169,11 +167,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction multiply(Fraction f) {
-        FractionImpl fImple = new FractionImpl(f.toString());
+        FractionImpl fImple = (FractionImpl) f;
         int newNumerator = this.numerator * fImple.numerator;
         int newDenominator = this.denominator * fImple.denominator;
-        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
-        return retFraction;
+        return new FractionImpl(newNumerator, newDenominator);
     }
 
     /**
@@ -181,11 +178,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction divide(Fraction f) {
-        FractionImpl fImple = new FractionImpl(f.toString());
+        FractionImpl fImple = (FractionImpl) f;
         int newNumerator = this.numerator * fImple.denominator;
         int newDenominator = this.denominator * fImple.numerator;
-        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
-        return retFraction;
+        return new FractionImpl(newNumerator, newDenominator);
     }
 
     /**
@@ -195,8 +191,7 @@ public class FractionImpl implements Fraction {
     public Fraction abs() {
         if (this.numerator > 0) return FractionImpl.this;
         else {
-            Fraction newFraction = new FractionImpl(makePlus(this.numerator), this.denominator);
-            return newFraction;
+            return new FractionImpl(makePlus(this.numerator), this.denominator);
         }
     }
 
@@ -206,12 +201,10 @@ public class FractionImpl implements Fraction {
     @Override
     public Fraction negate() {
         if (this.numerator > 0) {
-            Fraction newFraction = new FractionImpl(makeMinus(this.numerator), this.denominator);
-            return newFraction;
+            return new FractionImpl(makeMinus(this.numerator), this.denominator);
         }
         else {
-            Fraction newFraction = new FractionImpl(makePlus(this.numerator), this.denominator);
-            return newFraction;
+            return new FractionImpl(makePlus(this.numerator), this.denominator);
         }
     }
 
@@ -244,7 +237,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction inverse() {
-        return null;
+        int swap = this.numerator;
+        FractionImpl returnFraction = new FractionImpl(this.numerator, this.denominator);
+        returnFraction.numerator = this.denominator;
+        returnFraction.denominator = swap;
+        return returnFraction;
     }
 
     /**
