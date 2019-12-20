@@ -1,6 +1,8 @@
 package fraction;
 
 
+import javafx.util.Pair;
+
 public class FractionImpl implements Fraction {
     /**
      * Parameters are the numerator and the denominator.
@@ -191,7 +193,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction abs() {
-        return null;
+        if (this.numerator > 0) return FractionImpl.this;
+        else {
+            Fraction newFraction = new FractionImpl(makePlus(this.numerator), this.denominator);
+            return newFraction;
+        }
     }
 
     /**
@@ -199,7 +205,14 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction negate() {
-        return null;
+        if (this.numerator > 0) {
+            Fraction newFraction = new FractionImpl(makeMinus(this.numerator), this.denominator);
+            return newFraction;
+        }
+        else {
+            Fraction newFraction = new FractionImpl(makePlus(this.numerator), this.denominator);
+            return newFraction;
+        }
     }
 
     /**
