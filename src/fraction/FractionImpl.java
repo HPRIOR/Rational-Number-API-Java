@@ -222,7 +222,12 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(!(obj instanceof Fraction)) return false;
+        else{
+            FractionImpl compareFraction = (FractionImpl) obj;
+            return compareFraction.denominator == this.denominator &
+                    compareFraction.numerator == this.numerator;
+        }
     }
 
     /**
@@ -251,6 +256,7 @@ public class FractionImpl implements Fraction {
     @Override
     public int compareTo(Fraction o) {
         return 0;
+
     }
 
     /**
