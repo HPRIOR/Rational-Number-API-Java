@@ -73,7 +73,7 @@ public class FractionImpl implements Fraction {
     private void normalise(int numerator, int denominator) {
         // handle minuses here
         boolean minusFlag = false;
-        // boolean numeratorIsGreater = true; use this to remove reduntant code below
+        // boolean numeratorIsGreater = true; use this to remove redundant code below
         if (numerator < 0 || denominator < 0) {
             numerator = makePlus(numerator); denominator = makePlus(denominator);
             minusFlag = true;
@@ -144,6 +144,7 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction add(Fraction f) {
+        // cast type of f to FractionImpl
         FractionImpl fImple = (FractionImpl) f;
         int newNumerator = (this.numerator * fImple.denominator) + (this.denominator * fImple.numerator);
         int newDenominator = (this.denominator*fImple.denominator);
