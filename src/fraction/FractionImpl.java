@@ -16,30 +16,6 @@ public class FractionImpl implements Fraction {
     private int numerator;
     private int denominator;
 
-
-    // public FractionImpl(int numerator, int denominator) {
-    //     if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
-    //     else if (numerator > 0 & denominator > 0){
-    //         normalise(numerator, denominator);
-    //     }
-    //     else if (numerator < 0 & denominator > 0){
-    //         numerator = makePlus(numerator);
-    //         normalise(numerator, denominator);
-    //         this.numerator = makeMinus(this.numerator);
-    //     }
-    //     else if (numerator > 0 & denominator < 0){
-    //         denominator = makePlus(denominator);
-    //         normalise(numerator, denominator);
-    //         this.numerator = makeMinus(this.numerator);
-    //     }
-    //     else{
-    //         numerator = makePlus(numerator);
-    //         denominator = makePlus(denominator);
-    //         normalise(numerator, denominator);
-    //         this.numerator = makeMinus(this.numerator);
-    //     }
-    // }
-
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else normalise(numerator, denominator);
@@ -71,8 +47,7 @@ public class FractionImpl implements Fraction {
         String[] fractionSplit = fraction.split("/", 2);
         int index = 0;
         for (String x: fractionSplit){
-            fractionSplit[index] = x.replaceAll("\\s", "" );
-            // "this currently allows for spaces between characters
+            fractionSplit[index] = x.trim();
             index++;
         }
         try {
@@ -81,14 +56,12 @@ public class FractionImpl implements Fraction {
             normalise(stringIntNumerator, stringIntDenominator);
          }
         catch (NumberFormatException e){
-            System.out.println("error, please enter a string in the format: numerator/denominator");
+            System.out.println("error, enter numerator and/or denominator without spaces in between");
         }
     }
 
 
-    private int getNumerator(){return numerator;}
 
-    private int getDenominator(){return denominator;}
 
     /**
      * Helper method which returns a normalised fraction in constructor
@@ -146,7 +119,6 @@ public class FractionImpl implements Fraction {
 
     }
 
-
     /**
      * Helper method: makes integer plus
      */
@@ -164,12 +136,18 @@ public class FractionImpl implements Fraction {
         else return n;
     }
 
+
     /**
      * @inheritDoc
      */
     @Override
     public Fraction add(Fraction f) {
-        return null;
+        FractionImpl fImple = new FractionImpl(f.toString());
+        int newNumerator = (this.numerator * fImple.denominator) + (this.denominator * fImple.numerator);
+        int newDenominator = (this.denominator*fImple.denominator);
+        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
+        return retFraction;
+
     }
 
     /**
@@ -177,7 +155,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction subtract(Fraction f) {
-        return null;
+        FractionImpl fImple = new FractionImpl(f.toString());
+        int newNumerator = (this.numerator * fImple.denominator) - (this.denominator * fImple.numerator);
+        int newDenominator = (this.denominator*fImple.denominator);
+        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
+        return retFraction;
     }
 
     /**
@@ -185,7 +167,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction multiply(Fraction f) {
-        return null;
+        FractionImpl fImple = new FractionImpl(f.toString());
+        int newNumerator = this.numerator * fImple.numerator;
+        int newDenominator = this.denominator * fImple.denominator;
+        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
+        return retFraction;
     }
 
     /**
@@ -193,7 +179,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction divide(Fraction f) {
-        return null;
+        FractionImpl fImple = new FractionImpl(f.toString());
+        int newNumerator = this.numerator * fImple.denominator;
+        int newDenominator = this.denominator * fImple.numerator;
+        Fraction retFraction = new FractionImpl(newNumerator, newDenominator);
+        return retFraction;
     }
 
     /**
