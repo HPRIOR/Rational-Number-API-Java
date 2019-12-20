@@ -42,7 +42,6 @@ public class FractionImpl implements Fraction {
 
     /**
      * The parameter is the numerator and 1 is the implicit denominator.
-     *
      * @param wholeNumber representing the numerator
      */
     public FractionImpl(int wholeNumber) {
@@ -63,12 +62,20 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-
-
-        //if (fractionSplit.length < 1){
-        //    this(Integer.parseInt(fractionSplit[0]));
-
-        //System.out.println(Integer.parseInt(fractionSplit[0]) + "/" + Integer.parseInt(fractionSplit[1]));
+        String[] fractionSplit = fraction.split("/", 2);
+        int index = 0;
+        for (String x: fractionSplit){
+            fractionSplit[index] = x.replaceAll("\\s", "" );
+            index++;
+        }
+        try {
+            int stringNumerator = Integer.parseInt(fractionSplit[0]);
+            int stringDenominator = Integer.parseInt(fractionSplit[1]);
+            System.out.println(stringNumerator + "/" + stringDenominator);
+         }
+        catch (NumberFormatException e){
+            System.out.println("error, please enter a string in the format: numerator/denominator");
+        }
     }
 
 
@@ -79,6 +86,7 @@ public class FractionImpl implements Fraction {
     /**
      * Helper method which returns a normalised fraction in constructor
      * handles the difference between numerator or denominator
+     * this should handle minus and plus
      */
     private void normalise(int numerator, int denominator) {
         if (numerator > denominator) {
