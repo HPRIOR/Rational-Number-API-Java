@@ -2,8 +2,11 @@ import fraction.FractionImpl;
 
 public class Main {
     public static void main(String[] args){
-        FractionImpl n2 = new FractionImpl("5 5");
-        System.out.println(n2.toString());
+        FractionImpl n4 = new FractionImpl(-7, -8);
+        FractionImpl n5 = new FractionImpl(9);
+        System.out.println(n4.add(n5));
+
+
 
     }
 }

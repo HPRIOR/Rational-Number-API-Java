@@ -18,6 +18,7 @@ public class FractionImpl implements Fraction {
     private int denominator;
 
     public FractionImpl(int numerator, int denominator) {
+        // should account for n = d
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else normalise(numerator, denominator);
     }
@@ -46,37 +47,35 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        // this needs to handle whole numbers - do try(parse to integer after triming) except: below
-        try{
-            fraction.trim();
-            numerator = Integer.parseInt(fraction);
-            denominator = 1;
-        } catch (NumberFormatException e1){
-            // splits string between '/' to produce an array of two strings
-            String[] fractionSplit = fraction.split("/", 2);
-
-            // removes white spaces on either side of strings, but not in between
-            int index = 0;
-            for (String x : fractionSplit) {
-                fractionSplit[index] = x.trim();
-                index++;
-            }
-
-            // attempts to convert strings to integers, failure resulting from spaces in between integers, or wrong type
-            // throw error message
-            try {
-                int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
-                int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
-                normalise(stringIntNumerator, stringIntDenominator);
-            } catch (NumberFormatException e2) {
-                System.out.println("error, enter an integer numerator and/or denominator without spaces in between");
-            }
-        }
-
-
-
-
-
+        // this needs to handle whole numbers - do try(parse to integer after trimming) except: below
+       if (fraction.contains("/")) {
+           // splits string between '/' to produce an array of two strings
+           String[] fractionSplit = fraction.split("/", 2);
+           // removes white spaces on either side of strings, but not in between
+           int index = 0;
+           for (String x : fractionSplit) {
+               fractionSplit[index] = x.trim();
+               index++;
+           }
+           // attempts to convert strings to integers, failure resulting from spaces in between integers, or wrong type
+           // throw error message
+           try {
+               int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
+               int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
+               normalise(stringIntNumerator, stringIntDenominator);
+           } catch (NumberFormatException e2) {
+               throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
+           }
+       }
+       else{
+           try{
+               fraction.trim();
+               numerator = Integer.parseInt(fraction);
+               denominator = 1;
+           } catch (NumberFormatException e1){
+               throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
+           }
+       }
     }
 
 
@@ -114,17 +113,20 @@ public class FractionImpl implements Fraction {
 
 
     private int gCd(int small, int large){
-        int answer = large / small;
-        int prev_answer = large / small;
-        int remainder = large % small;
-        int GCD = small;
-        while (remainder != 0) {
-            answer = answer / remainder;
-            GCD = remainder;
-            remainder = prev_answer % remainder;
-            prev_answer = answer;
+        int r = large % small;
+        int previous_r = r;
+        if (r == 0){
+            return small;
         }
-        return GCD;
+        else{
+            while (r != 0){
+                previous_r = r;
+                r = small % r;
+                small = previous_r;
+            }
+            return previous_r;
+        }
+
     }
 
     /**
