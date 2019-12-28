@@ -1,7 +1,6 @@
 package fraction;
 
 
-import javafx.util.Pair;
 
 public class FractionImpl implements Fraction {
     /**
@@ -9,7 +8,7 @@ public class FractionImpl implements Fraction {
      * Normalize the fraction as you create it.
      * For instance, if the parameters are (8, -12), create a Fraction with numerator
      * -2 and denominator 3.
-     *
+     * <p>
      * The constructor should throw an ArithmeticException if the denominator is zero.
      *
      * @param numerator
@@ -21,11 +20,12 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
         else normalise(numerator, denominator);
-        }
+    }
 
 
     /**
      * The parameter is the numerator and 1 is the implicit denominator.
+     *
      * @param wholeNumber representing the numerator
      */
     public FractionImpl(int wholeNumber) {
@@ -46,23 +46,38 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        String[] fractionSplit = fraction.split("/", 2);
-        int index = 0;
-        for (String x: fractionSplit){
-            fractionSplit[index] = x.trim();
-            index++;
+        // this needs to handle whole numbers - do try(parse to integer after triming) except: below
+        try{
+            fraction.trim();
+            numerator = Integer.parseInt(fraction);
+            denominator = 1;
+        } catch (NumberFormatException e1){
+            // splits string between '/' to produce an array of two strings
+            String[] fractionSplit = fraction.split("/", 2);
+
+            // removes white spaces on either side of strings, but not in between
+            int index = 0;
+            for (String x : fractionSplit) {
+                fractionSplit[index] = x.trim();
+                index++;
+            }
+
+            // attempts to convert strings to integers, failure resulting from spaces in between integers, or wrong type
+            // throw error message
+            try {
+                int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
+                int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
+                normalise(stringIntNumerator, stringIntDenominator);
+            } catch (NumberFormatException e2) {
+                System.out.println("error, enter an integer numerator and/or denominator without spaces in between");
+            }
         }
-        try {
-            int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
-            int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
-            normalise(stringIntNumerator, stringIntDenominator);
-         }
-        catch (NumberFormatException e){
-            System.out.println("error, enter numerator and/or denominator without spaces in between");
-        }
+
+
+
+
+
     }
-
-
 
 
     /**
@@ -71,54 +86,45 @@ public class FractionImpl implements Fraction {
      * this should handle minus and plus
      */
     private void normalise(int numerator, int denominator) {
-        // handle minuses here
+        int large;
+        int small;
         boolean minusFlag = false;
-        // boolean numeratorIsGreater = true; use this to remove redundant code below
         if (numerator < 0 || denominator < 0) {
-            numerator = makePlus(numerator); denominator = makePlus(denominator);
+            numerator = makePlus(numerator);
+            denominator = makePlus(denominator);
             minusFlag = true;
         }
-
         if (numerator > denominator) {
-            int answer = numerator / denominator;
-            int prev_answer = numerator / denominator;
-            int remainder = numerator % denominator;
-            int GCD = denominator;
-            while (remainder != 0) {
-                answer = answer / remainder;
-                GCD = remainder;
-                remainder = prev_answer % remainder;
-                prev_answer = answer;
-            }
-            if (minusFlag){
-                this.numerator = makeMinus(numerator / GCD);
-            }
-            else{
-                this.numerator = numerator / GCD;
-            }
-            this.denominator = denominator / GCD;
-
+            large = numerator;
+            small = denominator;
+        } else {
+            large = denominator;
+            small = numerator;
         }
-        else {
-            int answer = denominator / numerator;
-            int prev_answer = denominator / numerator;
-            int remainder = denominator % numerator;
-            int GCD = numerator;
-            while (remainder != 0) {
-                answer = answer / remainder;
-                GCD = remainder;
-                remainder = prev_answer % remainder;
-                prev_answer = answer;
-            }
-            if (minusFlag){
-                this.numerator = makeMinus(numerator / GCD);
-            }
-            else{
-                this.numerator = numerator / GCD;
-            }
-            this.denominator = denominator / GCD;
+        int GCD = gCd(small, large);
+        if (minusFlag){
+            this.numerator = makeMinus(numerator / GCD);
         }
+        else{
+            this.numerator = numerator / GCD;
+        }
+        this.denominator = denominator / GCD;
 
+    }
+
+
+    private int gCd(int small, int large){
+        int answer = large / small;
+        int prev_answer = large / small;
+        int remainder = large % small;
+        int GCD = small;
+        while (remainder != 0) {
+            answer = answer / remainder;
+            GCD = remainder;
+            remainder = prev_answer % remainder;
+            prev_answer = answer;
+        }
+        return GCD;
     }
 
     /**
