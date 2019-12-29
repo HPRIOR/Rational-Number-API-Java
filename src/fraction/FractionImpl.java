@@ -19,7 +19,11 @@ public class FractionImpl implements Fraction {
 
     public FractionImpl(int numerator, int denominator) {
         // should account for n = d
-        if (denominator == 0) throw new ArithmeticException("Cannot divide by zero");
+        if (denominator == 0) throw new ArithmeticException("Denominator cannot be zero");
+        else if(numerator == 0){
+            this.numerator = 0;
+            this.denominator = denominator;
+        }
         else normalise(numerator, denominator);
     }
 
@@ -63,7 +67,11 @@ public class FractionImpl implements Fraction {
                int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
                int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
                if (stringIntDenominator == 0){
-                   throw new ArithmeticException("Cannot divide by zero");
+                   throw new ArithmeticException("Denominator cannot be zero");
+               }
+               else if (stringIntNumerator == 0){
+                   numerator = 0;
+                   denominator = stringIntDenominator;
                }
                else normalise(stringIntNumerator, stringIntDenominator);
            } catch (NumberFormatException e2) {
@@ -191,9 +199,15 @@ public class FractionImpl implements Fraction {
     @Override
     public Fraction divide(Fraction f) {
         FractionImpl fImple = (FractionImpl) f;
-        int newNumerator = this.numerator * fImple.denominator;
-        int newDenominator = this.denominator * fImple.numerator;
-        return new FractionImpl(newNumerator, newDenominator);
+        if (this.numerator == 0 || fImple.numerator == 0){
+            throw new ArithmeticException("cannot divide by zero");
+        }
+        else{
+            int newNumerator = this.numerator * fImple.denominator;
+            int newDenominator = this.denominator * fImple.numerator;
+            return new FractionImpl(newNumerator, newDenominator);
+        }
+
     }
 
     /**
