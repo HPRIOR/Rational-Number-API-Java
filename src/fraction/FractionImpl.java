@@ -284,7 +284,6 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public String toString() {
-        // Handle improper fractions
         String den_str = String.valueOf(denominator);
         String num_str = String.valueOf(numerator);
         return num_str + '/' + den_str;
