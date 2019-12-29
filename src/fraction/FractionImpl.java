@@ -202,13 +202,8 @@ public class FractionImpl implements Fraction {
     @Override
     public Fraction abs() {
         // this may return the same object rather than creating a new fraction
-        if (this.numerator > 0) {
-            FractionImpl n = FractionImpl.this;
-            return n;
-        }
-        else {
-            return new FractionImpl(makePlus(this.numerator), this.denominator);
-        }
+        if (this.numerator > 0) return this;
+        else { return new FractionImpl(makePlus(this.numerator), this.denominator);}
     }
 
     /**

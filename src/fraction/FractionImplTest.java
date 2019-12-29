@@ -7,34 +7,39 @@ import static org.junit.Assert.*;
 
 public class FractionImplTest {
 
-    public FractionImpl n1;
-    public FractionImpl n2;
-    public FractionImpl n3;
-    public FractionImpl n4;
-    public FractionImpl n5;
-    public FractionImpl n6;
-    public FractionImpl n7;
-    public FractionImpl n8;
-    public FractionImpl n9;
-    public FractionImpl n10;
-    public FractionImpl n11;
-    public FractionImpl n12;
+    private FractionImpl n1;
+    private FractionImpl n1_clone;
+    private FractionImpl n2;
+    private FractionImpl n3;
+    private FractionImpl n4;
+    private FractionImpl n4_clone;
+    private FractionImpl n5;
+    private FractionImpl n6;
+    private FractionImpl n7;
+    private FractionImpl n8;
+    private FractionImpl n8_clone;
+    private FractionImpl n9;
+    private FractionImpl n10;
+    private FractionImpl n11;
+    private FractionImpl n12;
 
     @Before
     public void setUp(){
         n1 = new FractionImpl(1, 2);
+        n1_clone = new FractionImpl(1, 2);
         n2 = new FractionImpl(-3, 47);
         n3 = new FractionImpl(5, -60);
         n4 = new FractionImpl(-7, -89);
+        n4_clone = new FractionImpl(-7, -89);
         n5 = new FractionImpl(9);
         n6 = new FractionImpl(-10);
         n7 = new FractionImpl("1/2");
         n8 = new FractionImpl("-3/47");
+        n8_clone = new FractionImpl("-3/47");
         n9 = new FractionImpl("5/-60");
         n10 = new FractionImpl("-7/-89");
         n11 = new FractionImpl("9");
         n12 = new FractionImpl("-10");
-
 
 
     }
@@ -65,6 +70,10 @@ public class FractionImplTest {
         assertEquals(test_6, a6);
         assertEquals(test_7, a7);
 
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -92,6 +101,11 @@ public class FractionImplTest {
         assertEquals(test_5, a5);
         assertEquals(test_6, a6);
         assertEquals(test_7, a7);
+
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -119,6 +133,11 @@ public class FractionImplTest {
         assertEquals(test_5, a5);
         assertEquals(test_6, a6);
         assertEquals(test_7, a7);
+
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -147,6 +166,10 @@ public class FractionImplTest {
         assertEquals(test_6, a6);
         assertEquals(test_7, a7);
 
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -190,6 +213,10 @@ public class FractionImplTest {
         assertEquals(test_11, a11);
         assertEquals(test_12, a12);
 
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -233,6 +260,10 @@ public class FractionImplTest {
         assertEquals(test_11, a11);
         assertEquals(test_12, a12);
 
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -262,6 +293,11 @@ public class FractionImplTest {
         assertTrue(test_10);
         assertTrue(test_11);
         assertFalse(test_12);
+
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -305,6 +341,10 @@ public class FractionImplTest {
         assertEquals(test_11, a11);
         assertEquals(test_12, a12);
 
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
     }
 
     @Test
@@ -326,21 +366,23 @@ public class FractionImplTest {
         String test_11 = n11.toString();
         String test_12 = n12.toString();
 
-        assertEquals(test_1, a1);
-        assertEquals(test_2, a2);
-        assertEquals(test_3, a3);
-        assertEquals(test_4, a4);
-        assertEquals(test_5, a5);
-        assertEquals(test_6, a6);
-        assertEquals(test_7, a7);
-        assertEquals(test_8, a8);
-        assertEquals(test_9, a9);
-        assertEquals(test_10, a10);
-        assertEquals(test_11, a11);
-        assertEquals(test_12, a12);
+        assertEquals(test_1, "1/2");
+        assertEquals(test_2, "-3/47");
+        assertEquals(test_3, "-1/12");
+        assertEquals(test_4, "7/89");
+        assertEquals(test_5, "9/1");
+        assertEquals(test_6, "-10/1");
+        assertEquals(test_7, "1/2");
+        assertEquals(test_8, "-3/47");
+        assertEquals(test_9, "-1/12");
+        assertEquals(test_10, "7/89");
+        assertEquals(test_11, "9/1");
+        assertEquals(test_12, "-10/1");
 
-
-
+        // test for immutability
+        assertEquals(n1, n1_clone);
+        assertEquals(n4, n4_clone);
+        assertEquals(n8, n8_clone);
 
     }
 }
