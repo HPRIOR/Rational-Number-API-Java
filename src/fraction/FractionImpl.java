@@ -47,7 +47,7 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        // this needs to handle whole numbers - do try(parse to integer after trimming) except: below
+        // this needs to handle 0 values in the denominator, throw arithmetic exception
        if (fraction.contains("/")) {
            // splits string between '/' to produce an array of two strings
            String[] fractionSplit = fraction.split("/", 2);
@@ -62,15 +62,18 @@ public class FractionImpl implements Fraction {
            try {
                int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
                int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
-               normalise(stringIntNumerator, stringIntDenominator);
+               if (stringIntDenominator == 0){
+                   throw new ArithmeticException("Cannot divide by zero");
+               }
+               else normalise(stringIntNumerator, stringIntDenominator);
            } catch (NumberFormatException e2) {
                throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
            }
        }
+       // if input string is a whole number
        else{
            try{
-               fraction.trim();
-               numerator = Integer.parseInt(fraction);
+               numerator = Integer.parseInt(fraction.trim());
                denominator = 1;
            } catch (NumberFormatException e1){
                throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
@@ -88,7 +91,7 @@ public class FractionImpl implements Fraction {
         int large;
         int small;
         boolean minusFlag = false;
-        if (numerator < 0 || denominator < 0) {
+        if (numerator < 0 ^ denominator < 0) {
             numerator = makePlus(numerator);
             denominator = makePlus(denominator);
             minusFlag = true;
@@ -198,7 +201,11 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction abs() {
-        if (this.numerator > 0) return FractionImpl.this;
+        // this may return the same object rather than creating a new fraction
+        if (this.numerator > 0) {
+            FractionImpl n = FractionImpl.this;
+            return n;
+        }
         else {
             return new FractionImpl(makePlus(this.numerator), this.denominator);
         }
@@ -251,11 +258,7 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction inverse() {
-        int swap = this.numerator;
-        FractionImpl returnFraction = new FractionImpl(this.numerator, this.denominator);
-        returnFraction.numerator = this.denominator;
-        returnFraction.denominator = swap;
-        return returnFraction;
+        return new FractionImpl(this.denominator, this.numerator);
     }
 
     /**
