@@ -122,6 +122,15 @@ public class FractionImpl implements Fraction {
 
     }
 
+    private int return_GCD(int numerator, int denominator){
+        // use this in the method above (normalisation)
+        if (denominator > numerator){
+            return gCd(numerator, denominator);
+        }
+        else{
+            return gCd(denominator, numerator);
+        }
+    }
 
     private int gCd(int small, int large){
         int r = large % small;
@@ -275,7 +284,17 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public int compareTo(Fraction o) {
-        return 0;
+        FractionImpl fImple = (FractionImpl) o;
+        if (fImple.denominator == this.denominator){
+            return Integer.compare(fImple.numerator, this.numerator);
+        }
+        else{
+            int times = fImple.denominator * this.denominator;
+            int thisComNum = this.numerator * fImple.denominator;
+            int fImpleComNum = fImple.numerator * this.denominator;
+            return Integer.compare(fImpleComNum, thisComNum);
+
+        }
 
     }
 
