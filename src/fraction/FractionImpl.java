@@ -286,16 +286,13 @@ public class FractionImpl implements Fraction {
     public int compareTo(Fraction o) {
         FractionImpl fImple = (FractionImpl) o;
         if (fImple.denominator == this.denominator){
-            return Integer.compare(fImple.numerator, this.numerator);
+            return Integer.compare(this.numerator, fImple.numerator);
         }
         else{
-            int times = fImple.denominator * this.denominator;
             int thisComNum = this.numerator * fImple.denominator;
             int fImpleComNum = fImple.numerator * this.denominator;
-            return Integer.compare(fImpleComNum, thisComNum);
-
+            return Integer.compare(thisComNum, fImpleComNum);
         }
-
     }
 
     /**
