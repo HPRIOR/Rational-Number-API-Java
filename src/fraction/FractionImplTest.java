@@ -26,6 +26,14 @@ public class FractionImplTest {
     private FractionImpl n12;
     private FractionImpl n13;
     private FractionImpl n14;
+    private FractionImpl comp1;
+    private FractionImpl comp2;
+    private FractionImpl comp3;
+    private FractionImpl comp4;
+    private FractionImpl comp5;
+    private FractionImpl comp6;
+    private FractionImpl comp7;
+    private FractionImpl comp8;
 
     private Object ArithmeticException;
     private Object NumberFormatException;
@@ -63,6 +71,14 @@ public class FractionImplTest {
         n4_clone = new FractionImpl(-7, -89);
         n8_clone = new FractionImpl("-3/47");
 
+        // fractions to compare
+        comp1 = new FractionImpl(1,4);
+        comp2 = new FractionImpl(2,8);
+        comp3 = new FractionImpl(8,8);
+        comp4 = new FractionImpl(1,4);
+        comp5 = new FractionImpl(-1,4);
+        comp6 = new FractionImpl(2,16);
+        comp7 = new FractionImpl(100,4);
 
     }
 
@@ -439,7 +455,37 @@ public class FractionImplTest {
 
     @Test
     public void compareTo() {
+        comp1 = new FractionImpl(1,4);
+        comp2 = new FractionImpl(2,8);
+        comp3 = new FractionImpl(8,8);
+        comp4 = new FractionImpl(-1,4);
+        comp5 = new FractionImpl(-1,8);
+        comp6 = new FractionImpl(-2,16);
+        comp7 = new FractionImpl(100,4);
+
+        int test1 = comp1.compareTo(comp2);
+        int test2 = comp2.compareTo(comp1);
+        int test3 = comp3.compareTo(comp2);
+        int test4 = comp1.compareTo(comp3);
+        int test5 = comp3.compareTo(comp4);
+        int test6 = comp4.compareTo(comp5);
+        int test7 = comp5.compareTo(comp6);
+        int test8 = comp6.compareTo(comp5);
+        int test9 = comp6.compareTo(comp6);
+        int test10 = comp7.compareTo(comp1);
+
+        assertEquals(test1, 0);
+        assertEquals(test2,0 );
+        assertEquals(test3, 1);
+        assertEquals(test4, -1);
+        assertEquals(test5, 1);
+        assertEquals(test6, -1);
+        assertEquals(test7, 0);
+        assertEquals(test8,0 );
+        assertEquals(test9, 0);
+        assertEquals(test10, 1);
     }
+
 
     @Test
     public void testToString() {
