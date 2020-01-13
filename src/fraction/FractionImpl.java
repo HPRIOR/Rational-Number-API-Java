@@ -20,6 +20,10 @@ public class FractionImpl implements Fraction {
     public FractionImpl(int numerator, int denominator) {
         // should account for n = d
         if (denominator == 0) throw new ArithmeticException("Denominator cannot be zero");
+        else if (numerator == denominator) {
+            this.denominator = 1;
+            this.numerator = 1;
+        }
         else if(numerator == 0){
             this.numerator = 0;
             this.denominator = denominator;
@@ -66,8 +70,10 @@ public class FractionImpl implements Fraction {
            try {
                int stringIntNumerator = Integer.parseInt(fractionSplit[0]);
                int stringIntDenominator = Integer.parseInt(fractionSplit[1]);
-               if (stringIntDenominator == 0){
-                   throw new ArithmeticException("Denominator cannot be zero");
+               if (stringIntDenominator == 0){ throw new ArithmeticException("Denominator cannot be zero");}
+               else if (stringIntDenominator == stringIntNumerator){
+                   this.numerator = 1;
+                   this.denominator = 1;
                }
                else if (stringIntNumerator == 0){
                    numerator = 0;
@@ -93,25 +99,16 @@ public class FractionImpl implements Fraction {
     /**
      * Helper method which returns a normalised fraction in constructor
      * handles the difference between numerator or denominator
-     * this should handle minus and plus
+     * and negative values
      */
     private void normalise(int numerator, int denominator) {
-        int large;
-        int small;
         boolean minusFlag = false;
         if (numerator < 0 ^ denominator < 0) {
             numerator = makePlus(numerator);
             denominator = makePlus(denominator);
             minusFlag = true;
         }
-        if (numerator > denominator) {
-            large = numerator;
-            small = denominator;
-        } else {
-            large = denominator;
-            small = numerator;
-        }
-        int GCD = gCd(small, large);
+        int GCD = return_GCD(numerator, denominator);
         if (minusFlag){
             this.numerator = makeMinus(numerator / GCD);
         }
@@ -123,7 +120,6 @@ public class FractionImpl implements Fraction {
     }
 
     private int return_GCD(int numerator, int denominator){
-        // use this in the method above (normalisation)
         if (denominator > numerator){
             return gCd(numerator, denominator);
         }
@@ -172,12 +168,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction add(Fraction f) {
-        // cast type of f to FractionImpl
         FractionImpl fImple = (FractionImpl) f;
         int newNumerator = (this.numerator * fImple.denominator) + (this.denominator * fImple.numerator);
         int newDenominator = (this.denominator*fImple.denominator);
         return new FractionImpl(newNumerator, newDenominator);
-
     }
 
     /**
@@ -224,9 +218,8 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction abs() {
-        // this may return the same object rather than creating a new fraction
-        if (this.numerator > 0) return this;
-        else { return new FractionImpl(makePlus(this.numerator), this.denominator);}
+        if (this.numerator > 0) return new FractionImpl(this.numerator, this.denominator);
+        else return new FractionImpl(makePlus(this.numerator), this.denominator);
     }
 
     /**
@@ -234,12 +227,8 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction negate() {
-        if (this.numerator > 0) {
-            return new FractionImpl(makeMinus(this.numerator), this.denominator);
-        }
-        else {
-            return new FractionImpl(makePlus(this.numerator), this.denominator);
-        }
+        if (this.numerator > 0) { return new FractionImpl(makeMinus(this.numerator), this.denominator);}
+        else { return new FractionImpl(makePlus(this.numerator), this.denominator); }
     }
 
     /**
@@ -290,7 +279,7 @@ public class FractionImpl implements Fraction {
         }
         else{
             int thisComNum = this.numerator * fImple.denominator;
-            int fImpleComNum = fImple.numerator * this.denominator;
+            int fImpleComNum = this.denominator * fImple.numerator;
             return Integer.compare(thisComNum, fImpleComNum);
         }
     }

@@ -33,7 +33,6 @@ public class FractionImplTest {
     private FractionImpl comp5;
     private FractionImpl comp6;
     private FractionImpl comp7;
-    private FractionImpl comp8;
 
     private Object ArithmeticException;
     private Object NumberFormatException;
@@ -122,10 +121,6 @@ public class FractionImplTest {
 
         assertEquals(error7.toString(), "8/1");
         assertEquals(error9.toString(), "1/1");
-
-
-
-
     }
 
     @Test
