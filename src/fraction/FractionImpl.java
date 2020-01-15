@@ -208,7 +208,6 @@ public class FractionImpl implements Fraction {
             int newDenominator = this.denominator * fImple.numerator;
             return new FractionImpl(newNumerator, newDenominator);
         }
-
     }
 
     /**
