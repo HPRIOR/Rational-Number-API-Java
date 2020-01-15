@@ -102,6 +102,7 @@ public class FractionImplTest {
 
     }
 
+
     @Test (expected = NumberFormatException.class)
     public void instantiateWithGaps(){
         // legal gaps
@@ -514,12 +515,6 @@ public class FractionImplTest {
         assertEquals(n1, n1_clone);
         assertEquals(n4, n4_clone);
         assertEquals(n8, n8_clone);
-
-    }
-
-    @Test
-    public void return_GCD{
-
 
     }
 }

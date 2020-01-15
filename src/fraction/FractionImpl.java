@@ -100,14 +100,14 @@ public class FractionImpl implements Fraction {
      * and negative values
      */
     private void normalise(int numerator, int denominator) {
-        boolean minusFlag = false;
+        boolean isNegative = false;
         if (numerator < 0 ^ denominator < 0) {
             numerator = makePlus(numerator);
             denominator = makePlus(denominator);
-            minusFlag = true;
+            isNegative = true;
         }
         int GCD = return_GCD(numerator, denominator);
-        if (minusFlag){
+        if (isNegative){
             this.numerator = makeMinus(numerator / GCD);
         }
         else{
