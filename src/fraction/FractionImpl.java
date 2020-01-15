@@ -117,6 +117,7 @@ public class FractionImpl implements Fraction {
 
     }
 
+    // add tests for this method
     private int return_GCD(int numerator, int denominator){
         if (denominator > numerator){
             return gCd(numerator, denominator);

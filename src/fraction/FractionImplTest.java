@@ -516,4 +516,10 @@ public class FractionImplTest {
         assertEquals(n8, n8_clone);
 
     }
+
+    @Test
+    public void return_GCD{
+
+
+    }
 }
