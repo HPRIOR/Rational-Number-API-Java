@@ -18,7 +18,6 @@ public class FractionImpl implements Fraction {
     private int denominator;
 
     public FractionImpl(int numerator, int denominator) {
-        // should account for n = d
         if (denominator == 0) throw new ArithmeticException("Denominator cannot be zero");
         else if (numerator == denominator) {
             this.denominator = 1;
@@ -55,7 +54,6 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        // this needs to handle 0 values in the denominator, throw arithmetic exception
        if (fraction.contains("/")) {
            // splits string between '/' to produce an array of two strings
            String[] fractionSplit = fraction.split("/", 2);
