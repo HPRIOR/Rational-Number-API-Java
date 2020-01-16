@@ -1,7 +1,5 @@
 package fraction;
 
-
-
 public class FractionImpl implements Fraction {
     /**
      * Parameters are the numerator and the denominator.
