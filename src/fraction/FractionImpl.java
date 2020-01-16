@@ -101,12 +101,17 @@ public class FractionImpl implements Fraction {
      */
     private void normalise(int numerator, int denominator) {
         boolean isNegative = false;
+        // check for negative numbers in either numerator or denominator
         if (numerator < 0 ^ denominator < 0) {
             numerator = makePlus(numerator);
             denominator = makePlus(denominator);
             isNegative = true;
         }
         int GCD = return_GCD(numerator, denominator);
+        fractionMaker(numerator, denominator, isNegative, GCD);
+    }
+
+    private void fractionMaker(int numerator, int denominator, boolean isNegative, int GCD){
         if (isNegative){
             this.numerator = makeMinus(numerator / GCD);
         }
@@ -114,7 +119,6 @@ public class FractionImpl implements Fraction {
             this.numerator = numerator / GCD;
         }
         this.denominator = denominator / GCD;
-
     }
 
     // add tests for this method
