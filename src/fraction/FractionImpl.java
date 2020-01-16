@@ -76,7 +76,7 @@ public class FractionImpl implements Fraction {
                    denominator = stringIntDenominator;
                }
                else normalise(stringIntNumerator, stringIntDenominator);
-           } catch (NumberFormatException e2) {
+           } catch (NumberFormatException e1) {
                throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
            }
        }
@@ -85,7 +85,7 @@ public class FractionImpl implements Fraction {
            try{
                numerator = Integer.parseInt(fraction.trim());
                denominator = 1;
-           } catch (NumberFormatException e1){
+           } catch (NumberFormatException e2){
                throw new NumberFormatException("error, enter an integer numerator and/or denominator without spaces in between");
            }
        }
@@ -105,35 +105,43 @@ public class FractionImpl implements Fraction {
             denominator = makePlus(denominator);
             isNegative = true;
         }
-        int GCD = return_GCD(numerator, denominator);
-        fractionMaker(numerator, denominator, isNegative, GCD);
+        fractionMaker(numerator, denominator, isNegative, return_GCD(numerator, denominator));
     }
 
+    /**
+     * Initialises instance variables in normalised form, accounting for negative values
+     * @param numerator
+     * @param denominator
+     * @param isNegative is either the numerator or denominator negative
+     * @param GCD calculated GCD of numerator and denominator
+     */
     private void fractionMaker(int numerator, int denominator, boolean isNegative, int GCD){
-        if (isNegative){
-            this.numerator = makeMinus(numerator / GCD);
-        }
-        else{
-            this.numerator = numerator / GCD;
-        }
+
+        if (isNegative) this.numerator = makeMinus(numerator / GCD);
+        else this.numerator = numerator / GCD;
         this.denominator = denominator / GCD;
     }
 
+    /**
+     * Determines which is largest out of the numerator and denominator. Calculates GCD accordingly
+     * @param numerator
+     * @param denominator
+     */
     private int return_GCD(int numerator, int denominator){
-        if (denominator > numerator){
-            return gCd(numerator, denominator);
-        }
-        else{
-            return gCd(denominator, numerator);
-        }
+        if (denominator > numerator) return gCd(numerator, denominator);
+        else return gCd(denominator, numerator);
     }
 
+    /**
+     * Calculates the GCD for both numerator and denominator
+     * @param small either the numerator or denominator
+     * @param large either the numerator or denominator
+     * @returns smallest remainder before remainder = 0
+     */
     private int gCd(int small, int large){
         int r = large % small;
         int previous_r = r;
-        if (r == 0){
-            return small;
-        }
+        if (r == 0) return small;
         else{
             while (r != 0){
                 previous_r = r;
@@ -142,7 +150,6 @@ public class FractionImpl implements Fraction {
             }
             return previous_r;
         }
-
     }
 
     /**
@@ -155,7 +162,6 @@ public class FractionImpl implements Fraction {
 
     /**
      * Helper method makes integer minus
-     *
      */
     private int makeMinus(int n){
         if (n > 0) return -n;
