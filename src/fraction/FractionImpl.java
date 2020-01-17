@@ -101,8 +101,8 @@ public class FractionImpl implements Fraction {
         boolean isNegative = false;
         // check for negative numbers in either numerator or denominator
         if (numerator < 0 ^ denominator < 0) {
-            numerator = makePlus(numerator);
-            denominator = makePlus(denominator);
+            numerator = Math.abs(numerator);
+            denominator = Math.abs(denominator);
             isNegative = true;
         }
         fractionMaker(numerator, denominator, isNegative, return_GCD(numerator, denominator));
@@ -112,7 +112,7 @@ public class FractionImpl implements Fraction {
      * Initialises instance variables in normalised form, accounting for negative values
      * @param numerator
      * @param denominator
-     * @param isNegative is either the numerator or denominator negative
+     * @param isNegative true if the numerator or denominator negative
      * @param GCD calculated GCD of numerator and denominator
      */
     private void fractionMaker(int numerator, int denominator, boolean isNegative, int GCD){
@@ -153,15 +153,7 @@ public class FractionImpl implements Fraction {
     }
 
     /**
-     * Helper method: makes integer plus
-     */
-    private int makePlus(int n){
-        if (n < 0) return n * -1;
-        else return n;
-    }
-
-    /**
-     * Helper method makes integer minus
+     * Helper method: makes integer minus
      */
     private int makeMinus(int n){
         if (n > 0) return -n;
@@ -224,7 +216,7 @@ public class FractionImpl implements Fraction {
     @Override
     public Fraction abs() {
         if (this.numerator > 0) return new FractionImpl(this.numerator, this.denominator);
-        else return new FractionImpl(makePlus(this.numerator), this.denominator);
+        else return new FractionImpl(Math.abs(this.numerator), this.denominator);
     }
 
     /**
@@ -233,7 +225,7 @@ public class FractionImpl implements Fraction {
     @Override
     public Fraction negate() {
         if (this.numerator > 0) { return new FractionImpl(makeMinus(this.numerator), this.denominator);}
-        else { return new FractionImpl(makePlus(this.numerator), this.denominator); }
+        else { return new FractionImpl(Math.abs(this.numerator), this.denominator); }
     }
 
     /**
