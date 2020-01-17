@@ -160,7 +160,6 @@ public class FractionImpl implements Fraction {
         else return n;
     }
 
-
     /**
      * @inheritDoc
      */
