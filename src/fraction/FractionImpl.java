@@ -23,7 +23,7 @@ public class FractionImpl implements Fraction {
         }
         else if(numerator == 0){
             this.numerator = 0;
-            this.denominator = denominator;
+            this.denominator = Math.abs(denominator);
         }
         else normalise(numerator, denominator);
     }
@@ -112,7 +112,7 @@ public class FractionImpl implements Fraction {
      * Initialises instance variables in normalised form, accounting for negative values
      * @param numerator
      * @param denominator
-     * @param isNegative true if the numerator or denominator negative
+     * @param isNegative true if the nuerator or denominator negative
      * @param GCD calculated GCD of numerator and denominator
      */
     private void fractionMaker(int numerator, int denominator, boolean isNegative, int GCD){
